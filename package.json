@@ -1,0 +1,24 @@
+{
+  "name": "service-app",
+  "version": "1.0.0",
+  "description": "node服务应用",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoway/service-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luoway/service-app/issues"
+  },
+  "homepage": "https://github.com/luoway/service-app#readme",
+  "devDependencies": {
+    "@types/node": "^12.6.9",
+    "typescript": "^3.5.3"
+  }
+}
