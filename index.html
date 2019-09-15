@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <link rel="stylesheet" href="/cache-control/max-age.css">
+    <link rel="stylesheet" href="/cache-control/public.css">
+    <link rel="stylesheet" href="/cache-control/private.css">
+    <link rel="stylesheet" href="/cache-control/Last-Modified.css">
+</head>
+<body>
+    <ul>
+        <li>强缓存：
+            <ul>
+                <li><a href="/404.html">404.html - expires</a></li>
+                <li><a href="/cache-control/max-age.css">cache-control：max-age=10</a></li>
+                <li><a href="/cache-control/public.css">cache-control：public</a></li>
+                <li><a href="/cache-control/private.css">cache-control：private</a></li>
+            </ul>
+        </li>
+        <li>协商缓存：
+            <ul>
+                <li><a href="/cache-control/Last-Modified.css">Last-Modified</a></li>
+            </ul>
+        </li>
+        <li>不缓存：<a href="/index.html">index.html - no-store</a></li>
+    </ul>
+</body>
+</html>

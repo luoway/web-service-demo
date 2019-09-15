@@ -6,6 +6,12 @@ node + ts 原生实现web服务应用
 - [ ] 静态资源服务
   - [x] MIME 类型
   - [x] 404
-  - [ ] 配置缓存
+  - [x] 配置缓存
+    - [x] 强缓存
+        - [x] expires
+        - [x] cache-control
+    - [x] 协商缓存
+        - [x] Last-Modified
+        - [ ] Etag
 - [ ] API服务
   - [ ] 处理POST请求

@@ -1,8 +1,9 @@
 import * as http from 'http'
 import * as fs from 'fs'
 import * as path from 'path'
-import { chain } from '../common/utils'
-import { staticAssetsMIME } from '../common/constants'
+import { chain } from '../../common/utils'
+import { staticAssetsMIME } from '../../common/constants'
+import { cacheControl } from './cacheController'
 
 const PathTo404 = path.join(process.cwd(), '/404.html')
 
@@ -19,7 +20,6 @@ function foundResponse (response, filePath){
     const mime =
         staticAssetsMIME[path.extname(filePath).slice(1)] ||
         staticAssetsMIME.txt
-
     chain(response)
         .writeHead(200, {
             'content-type': mime,
@@ -37,9 +37,11 @@ function notFoundResponse (response){
 
 export default async function(
     request: http.IncomingMessage,
-    response: http.ServerResponse
+    response: http.ServerResponse,
+    options: any,
 ) {
     let filePath = path.join(process.cwd(), request.url) || PathTo404
+    if(cacheControl(request, response, options.cacheControl, filePath)) return false
     const exist = await isFileExist(filePath)
     if (!exist) {
         if(filePath !== PathTo404){
