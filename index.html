@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/cache-control/Etag.css">
 </head>
 <body>
+    <h2>静态资源 - 缓存</h2>
     <ul>
         <li>强缓存：
             <ul>
@@ -30,5 +31,43 @@
         </li>
         <li>不缓存：<a href="/index.html">index.html - no-store</a></li>
     </ul>
+    <br/>
+    <h2>接口服务</h2>
+    <form action="/api/post" method="post">
+        <h3>表单编码：application/x-www-form-urlencoded（默认）</h3>
+        <p>
+            param1：
+            <input type="radio" name="param1" value="true" checked>true
+            <input type="radio" name="param1" value="number">false
+        </p>
+        <p>
+            param2：<input type="text" name="param2" value="application/x-www-form-urlencoded">
+        </p>
+        <input type="submit" value="提交">
+    </form>
+    <form action="/api/post" method="post" enctype="multipart/form-data">
+        <h3>表单编码：multipart/form-data</h3>
+        <p>
+            param1：
+            <input type="radio" name="param1" value="true" checked>true
+            <input type="radio" name="param1" value="number">false
+        </p>
+        <p>
+            param2：<input type="text" name="param2" value="multipart/form-data">
+        </p>
+        <input type="submit" value="提交">
+    </form>
+    <form action="/api/post" method="post" enctype="text/plain">
+        <h3>表单编码：text/plain</h3>
+        <p>
+            param1：
+            <input type="radio" name="param1" value="true" checked>true
+            <input type="radio" name="param1" value="number">false
+        </p>
+        <p>
+            param2：<input type="text" name="param2" value="text/plain">
+        </p>
+        <input type="submit" value="提交">
+    </form>
 </body>
 </html>

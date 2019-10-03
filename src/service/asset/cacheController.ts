@@ -31,8 +31,6 @@ export function cacheControl(request, response, config, filePath){
             response.setHeader('Etag', fileMD5)
 
             const tag = headers['if-none-match']
-            console.log(tag, fileMD5)
-            console.log(tag === fileMD5)
             if(tag && tag === fileMD5){
                 response.writeHead(304)
                 response.end()

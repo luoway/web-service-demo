@@ -15,3 +15,6 @@ node + ts 原生实现web服务应用
         - [x] Etag
 - [ ] API服务
   - [ ] 处理POST请求
+    - [x] application/x-www-form-urlencoded
+    - [ ] multipart/form-data
+    - [x] text/plain

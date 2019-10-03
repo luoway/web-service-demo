@@ -41,14 +41,16 @@ export default async function(
     options: any,
 ) {
     let filePath = path.join(process.cwd(), request.url) || PathTo404
-    if(cacheControl(request, response, options.cacheControl, filePath)) return false
+    if(cacheControl(request, response, options.cacheControl, filePath)) 
+        //已304，停止后续逻辑
+        return false
     const exist = await isFileExist(filePath)
     if (!exist) {
         if(filePath !== PathTo404){
             const exist404 = await isFileExist(PathTo404)
-            if(exist404) {
+            if(exist404) {//查找并返回404文件内容
                 filePath = PathTo404
-            }else{
+            }else{//404文件也不存在，则返回默认内容
                 notFoundResponse(response)
             }
         }else{
