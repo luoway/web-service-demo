@@ -1,5 +1,5 @@
 import * as http from 'http'
-import * as qs from 'querystring';
+import * as qs from 'querystring'
 import { chain } from '../common/utils'
 
 function acceptPost(request){
@@ -93,7 +93,9 @@ export default async function(
             }
         }
 
-        if( target ){
+        if(action === 'postCookie'){//特殊处理
+            return target(request, response, param)
+        } if( target ){
             let result
             try{
                 result = await target(param)

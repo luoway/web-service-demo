@@ -21,3 +21,5 @@ node + ts 原生实现web服务应用
     - [x] text/plain
 
 - [x] 设置Cookie
+    - session(默认)
+        当浏览器退出时失效。关闭页面、关闭到后台运行均不会失效。
