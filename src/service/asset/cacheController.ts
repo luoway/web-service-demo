@@ -2,8 +2,8 @@ import * as fs from 'fs'
 import md5 from 'md5';
 export function cacheControl(request, response, config, filePath){
     const val = config[request.url]
-    if(val instanceof Date){
-        response.setHeader('Expires', val)
+    if(val instanceof Function){
+        response.setHeader('Expires', val())
     }else if(['no-store', 'no-cache', 'public', 'private'].includes(val)){
         response.setHeader('Cache-Control', val)
     }else if(typeof val === 'number'){

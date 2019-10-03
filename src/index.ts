@@ -6,8 +6,8 @@ import { api } from '../api';
 
 const cacheControl = {
     '/index.html': 'no-store',
-    '/404.html': new Date(Date.now() + 60 * 1000),
-    '/cache-control/Exprise.css': new Date(Date.now() + 10 * 1000),
+    '/404.html': () => new Date(Date.now() + 60 * 1000),
+    '/cache-control/Exprise.css': () => new Date(Date.now() + 10 * 1000),
     '/cache-control/max-age.css': 10,
     '/cache-control/public.css': 'public',
     '/cache-control/private.css': 'private',
@@ -20,7 +20,18 @@ export const Server = http.createServer((request, response) => {
     const target = request.url
     const extname = path.extname(target)
     const serve = /^\.[a-zA-Z]\w*$/.test(extname) ? assetServe : apiServe
-    serve(request, response, serve === assetServe ? { cacheControl } : { api })
+    serve(request, response, serve === assetServe ? 
+        { 
+            cacheControl,
+            cookies:{
+                timestamp: Date.now(),
+                httpOnly: {
+                    value: 'true',
+                    httpOnly: true,
+                }
+            }
+        } : 
+        { api })
 })
 
 const originalListen = Server.listen

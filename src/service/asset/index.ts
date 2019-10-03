@@ -44,6 +44,7 @@ export default async function(
     if(cacheControl(request, response, options.cacheControl, filePath)) 
         //已304，停止后续逻辑
         return false
+    
     const exist = await isFileExist(filePath)
     if (!exist) {
         if(filePath !== PathTo404){
@@ -57,5 +58,20 @@ export default async function(
             notFoundResponse(response)
         }
     }
+
+    //访问html则设置cookie
+    if(/\.html$/.test(request.url) && options.cookies){
+        const cookies = []
+        Object.keys(options.cookies).forEach(key=>{
+            const cookie = options.cookies[key]
+
+            if(typeof cookie === 'object'){
+                cookies.push(`${key}=${cookie.value + ';'}${cookie.httpOnly && 'HttpOnly'}`)
+            }
+            else cookies.push(`${key}=${cookie}`)
+        })
+        response.setHeader('Set-Cookie', cookies)
+    }
+
     foundResponse(response, filePath)
 }

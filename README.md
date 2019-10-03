@@ -13,8 +13,11 @@ node + ts 原生实现web服务应用
     - [x] 协商缓存
         - [x] Last-Modified
         - [x] Etag
+
 - [ ] API服务
   - [ ] 处理POST请求
     - [x] application/x-www-form-urlencoded
     - [ ] multipart/form-data
     - [x] text/plain
+
+- [x] 设置Cookie
