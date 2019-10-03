@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import md5 from 'md5';
 export function cacheControl(request, response, config, filePath){
     const val = config[request.url]
     if(val instanceof Date){
@@ -7,15 +8,32 @@ export function cacheControl(request, response, config, filePath){
         response.setHeader('Cache-Control', val)
     }else if(typeof val === 'number'){
         response.setHeader('Cache-Control', `max-age=${val}`)
-    }else if(['Modified'].includes(val)){//协商缓存
-        const stats = fs.statSync(filePath)
+    }else if(['Modified','Etag'].includes(val)){
+        //协商缓存
         response.setHeader('Cache-Control', 'no-cache')
-        val === 'Modified' && response.setHeader('Last-Modified', stats.mtime)
+        const headers = request && request.headers || {}
+        if(val === 'Modified'){
+            const stats = fs.statSync(filePath)
+            response.setHeader('Last-Modified', stats.mtime)
 
-        if(request && request.headers && request.headers['if-modified-since']){
-            const mtime = stats.mtime
-            const time = new Date(request.headers['if-modified-since'])
-            if(Number(mtime) <= Number(time) + 1000){
+            if(headers['if-modified-since']){
+                const mtime = stats.mtime
+                const time = new Date(headers['if-modified-since'])
+                if(Number(mtime) <= Number(time) + 1000){
+                    response.writeHead(304)
+                    response.end()
+                    return true
+                }
+            }
+
+        }else if(val === 'Etag'){
+            const fileMD5 = md5(fs.readFileSync(filePath))
+            response.setHeader('Etag', fileMD5)
+
+            const tag = headers['if-none-match']
+            console.log(tag, fileMD5)
+            console.log(tag === fileMD5)
+            if(tag && tag === fileMD5){
                 response.writeHead(304)
                 response.end()
                 return true

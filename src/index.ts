@@ -11,11 +11,13 @@ export const Server = http.createServer((request, response) => {
     serve(request, response, {
         cacheControl: {
             '/index.html': 'no-store',
-            '/404.html': new Date('2019-10-1'),
+            '/404.html': new Date(Date.now() + 60 * 1000),
+            '/cache-control/Exprise.css': new Date(Date.now() + 10 * 1000),
             '/cache-control/max-age.css': 10,
             '/cache-control/public.css': 'public',
             '/cache-control/private.css': 'private',
             '/cache-control/Last-Modified.css': 'Modified',
+            '/cache-control/Etag.css': 'Etag',
         }
     })
 })
