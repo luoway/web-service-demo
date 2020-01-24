@@ -19,7 +19,7 @@ node + ts 原生实现web服务应用
   - [x] 处理GET请求
   
   - [ ] 处理POST请求
-  - [x] application/x-www-form-urlencoded
+    - [x] application/x-www-form-urlencoded
     - [ ] multipart/form-data
     - [x] text/plain
   
