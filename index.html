@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>首页</title>
-    <link rel="stylesheet" href="/cache-control/Exprise.css">
+    <link rel="stylesheet" href="/cache-control/Expires.css">
     <link rel="stylesheet" href="/cache-control/max-age.css">
     <link rel="stylesheet" href="/cache-control/public.css">
     <link rel="stylesheet" href="/cache-control/private.css">
@@ -34,7 +34,7 @@
     <br/>
     <h2>接口服务</h2>
     <form action="/api/post" method="post">
-        <h3>表单编码：application/x-www-form-urlencoded（默认）</h3>
+        <h3>POST表单编码：application/x-www-form-urlencoded（默认）</h3>
         <p>
             param1：
             <input type="radio" name="param1" value="true" checked>true
@@ -46,7 +46,7 @@
         <input type="submit" value="提交">
     </form>
     <form action="/api/post" method="post" enctype="multipart/form-data">
-        <h3>表单编码：multipart/form-data</h3>
+        <h3>POST表单编码：multipart/form-data</h3>
         <p>
             param1：
             <input type="radio" name="param1" value="true" checked>true
@@ -58,7 +58,7 @@
         <input type="submit" value="提交">
     </form>
     <form action="/api/post" method="post" enctype="text/plain">
-        <h3>表单编码：text/plain</h3>
+        <h3>POST表单编码：text/plain</h3>
         <p>
             param1：
             <input type="radio" name="param1" value="true" checked>true
@@ -70,10 +70,54 @@
         <input type="submit" value="提交">
     </form>
     <br/>
-    <h2>设置Cookie</h2>
-    <form action="/api/postCookie" method="post">
-        <p>username: <input type="text" name="username" value="test"></p>
-        <input type="submit" value="提交">
-    </form>
+    <h2>预检请求</h2>
+    <p>当请求满足下述任一条件时，即应首先发送预检请求：</p>
+    <ul>
+        <li>使用了指定任一 HTTP 方法：PUT、DELETE、CONNECT、OPTIONS、TRACE、PATCH</li>
+        <li>人为设置了对 CORS 安全的首部字段集合之外的其他首部字段</li>
+        <li>Content-Type 的值不属于：application/x-www-form-urlencoded、multipart/form-data、text/plain</li>
+        <li>请求中的XMLHttpRequestUpload 对象注册了任意多个事件监听器</li>
+        <li>请求中使用了ReadableStream对象</li>
+    </ul>
+    <p>粗略地理解为：form元素不能实现的请求方式</p>
+    <button onclick="optionRequest()">点击发送预检请求</button>
+    <script>
+        function ajax(options) {
+            const {
+                method = 'get',
+                url = '',
+                param = '',
+                headers = {},
+                success = ()=>{},
+                error = ()=>{}
+            } = options
+            const XHR = new XMLHttpRequest()
+            XHR.onreadystatechange = function () {
+                if(XHR.readyState === 4){
+                    if(XHR.status === 200){
+                        success(XHR.response)
+                    }else{
+                        error(XHR.response)
+                    }
+                }
+            }
+            XHR.open(method.toUpperCase(), url, true)
+            Object.keys(headers).forEach(key=>{
+                const val = headers[key]
+                XHR.setRequestHeader(key, val)
+            })
+            XHR.send(param)
+        }
+        function optionRequest() {
+            ajax({
+                method: 'post',
+                url: 'http://localhost:9001/api/post',
+                headers:{
+                    'content-type': 'application/json'
+                },
+                param: JSON.stringify({a:123})
+            })
+        }
+    </script>
 </body>
 </html>

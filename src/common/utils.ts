@@ -1,3 +1,5 @@
+import * as fs from "fs";
+
 export function chain(obj: any) {
     const proxy = new Proxy(obj, {
         get(target, key, receiver) {
@@ -16,4 +18,12 @@ export function chain(obj: any) {
         },
     })
     return proxy
+}
+
+export function isFileExist(filePath: string) {
+    return new Promise((resolve) => {
+        fs.access(filePath, fs.constants.F_OK, (err) => {
+            resolve(!err)
+        })
+    })
 }

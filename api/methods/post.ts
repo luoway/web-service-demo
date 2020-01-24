@@ -1,3 +1,3 @@
-export default function (param){
+export default function ({request, response}, param){
     return param
 }
