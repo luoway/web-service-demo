@@ -1,5 +1,8 @@
 import * as http from "http";
 import * as qs from "querystring";
+import {parse as multipartParse, getBoundary} from 'parse-multipart-data';
+const fs = require('fs')
+const path = require('path')
 
 export async function getHandler(request: http.IncomingMessage) {
     const param = {}
@@ -26,7 +29,23 @@ export async function postHandler(request: http.IncomingMessage){
                     param = qs.parse(body)
                 }
                 else if(contentType.indexOf('multipart/form-data') > -1){
-                    console.log(body)
+                    const boundary = getBoundary(contentType)
+                    const data = multipartParse(Buffer.from(body), boundary)
+                    data.forEach(part=>{
+                        if(part.type){
+                            if(part.type.indexOf('image/') === 0){
+                                //@ts-ignore
+                                part.data = '' //此处文件处理不正确
+                            }
+                        }else{
+                            //@ts-ignore
+                            return param[part.name] = part.data.toString('utf-8')
+                        }
+                        param[part.name] = {
+                            ...part,
+                            name: undefined
+                        }
+                    })
                 }
                 else if(contentType === 'text/plain'){
                     body.split('\r\n').forEach(item=>{

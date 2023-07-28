@@ -2,6 +2,7 @@ import * as http from 'http'
 import {getHandler, postHandler} from "./handleParam";
 import {failHandler, forbiddenHandler, successHandler} from "./handlers";
 import {handleCORS} from "./handleCORS";
+import {handleAuth} from "./handleAuth";
 
 export default async function(
     request: http.IncomingMessage,
@@ -33,6 +34,10 @@ export default async function(
             }
             return successHandler(response, result)
         }
+    }
+
+    if(parts.length === 2 && parts[1] === 'auth' ){
+        return handleAuth(request, response)
     }
     
     return forbiddenHandler(response)

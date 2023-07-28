@@ -55,6 +55,9 @@
         <p>
             param2：<input type="text" name="param2" value="multipart/form-data">
         </p>
+        <p>
+            img：<input type="file" accept="image/*" name="img" value="">
+        </p>
         <input type="submit" value="提交">
     </form>
     <form action="/api/post" method="post" enctype="text/plain">
@@ -70,17 +73,23 @@
         <input type="submit" value="提交">
     </form>
     <br/>
-    <h2>预检请求</h2>
-    <p>当请求满足下述任一条件时，即应首先发送预检请求：</p>
-    <ul>
-        <li>使用了指定任一 HTTP 方法：PUT、DELETE、CONNECT、OPTIONS、TRACE、PATCH</li>
-        <li>人为设置了对 CORS 安全的首部字段集合之外的其他首部字段</li>
-        <li>Content-Type 的值不属于：application/x-www-form-urlencoded、multipart/form-data、text/plain</li>
-        <li>请求中的XMLHttpRequestUpload 对象注册了任意多个事件监听器</li>
-        <li>请求中使用了ReadableStream对象</li>
-    </ul>
-    <p>粗略地理解为：form元素不能实现的请求方式</p>
-    <button onclick="optionRequest()">点击发送预检请求</button>
+    <details>
+        <summary>预检请求</summary>
+        <p>当请求满足下述任一条件时，即应首先发送预检请求：</p>
+        <ul>
+            <li>使用了指定任一 HTTP 方法：PUT、DELETE、CONNECT、OPTIONS、TRACE、PATCH</li>
+            <li>人为设置了对 CORS 安全的首部字段集合之外的其他首部字段</li>
+            <li>Content-Type 的值不属于：application/x-www-form-urlencoded、multipart/form-data、text/plain</li>
+            <li>请求中的XMLHttpRequestUpload 对象注册了任意多个事件监听器</li>
+            <li>请求中使用了ReadableStream对象</li>
+        </ul>
+        <p>粗略地理解为：form元素不能实现的请求方式</p>
+        <button onclick="optionRequest()">点击发送预检请求</button>
+    </details>
+    <details>
+        <summary>鉴权</summary>
+        <a href="/auth" target="_blank">点击访问需鉴权资源</a>
+    </details>
     <script>
         function ajax(options) {
             const {
