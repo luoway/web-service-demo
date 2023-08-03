@@ -29,3 +29,7 @@ node + ts 原生实现web服务应用
 
 - [ ] 鉴权
   - [x] Basic
+
+- [ ] 持久连接
+  - [ ] keep-alive
+  - [x] WebSockets

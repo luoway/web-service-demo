@@ -1,32 +1,42 @@
 {
-  "name": "service-app",
-  "version": "1.0.0",
-  "description": "node服务应用",
-  "main": "index.js",
-  "scripts": {
-    "start": "tsc & node dist/index.js",
-    "dev": "tsc && (tsc -w & node dist/index.js)"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/luoway/service-app.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/luoway/service-app/issues"
-  },
-  "homepage": "https://github.com/luoway/service-app#readme",
-  "devDependencies": {
-    "@types/node": "^12.6.9",
-    "typescript": "^3.5.3"
-  },
-  "dependencies": {
-    "md5": "^2.2.1",
-    "parse-multipart-data": "^1.5.0"
-  },
-  "engines": {
-    "node": ">= 18.16.0"
-  }
+    "name": "service-app",
+    "version": "1.0.0",
+    "description": "node服务应用",
+    "main": "index.js",
+    "scripts": {
+        "start": "tsc & node dist/index.js",
+        "dev": "tsc && (tsc -w & node dist/index.js)"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/luoway/service-app.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/luoway/service-app/issues"
+    },
+    "homepage": "https://github.com/luoway/service-app#readme",
+    "devDependencies": {
+        "@types/node": "^12.6.9",
+        "typescript": "^3.5.3"
+    },
+    "dependencies": {
+        "md5": "^2.2.1",
+        "parse-multipart-data": "^1.5.0",
+        "ws": "^8.13.0"
+    },
+    "engines": {
+        "node": "< 12"
+    },
+    "prettier": {
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "tabWidth": 4,
+        "printWidth": 80,
+        "bracketSpacing": true,
+        "arrowParens": "always"
+    }
 }

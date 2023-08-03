@@ -1,4 +1,4 @@
-import { Server } from './src'
+import { Server, createWebSocketServer } from './src/index'
 const args = process.argv[2]
 let port = 9000
 if(args){
@@ -10,3 +10,4 @@ if(args){
     }
 }
 Server.listen(port)
+createWebSocketServer(port+1)

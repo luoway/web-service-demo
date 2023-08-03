@@ -3,6 +3,7 @@ import * as path from 'path'
 
 import { apiServe, assetServe } from './service'
 import { api } from '../api';
+export * from './service/webSockets/serve'
 
 const cacheControl = {
     '/index.html': 'no-store',

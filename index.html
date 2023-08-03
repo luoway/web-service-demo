@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,65 +13,69 @@
     <link rel="stylesheet" href="/cache-control/Etag.css">
 </head>
 <body>
-    <h2>静态资源 - 缓存</h2>
-    <ul>
-        <li>强缓存：
-            <ul>
-                <li><a href="/404.html">404.html - expires</a></li>
-                <li><a href="/cache-control/max-age.css">cache-control：max-age=10</a></li>
-                <li><a href="/cache-control/public.css">cache-control：public</a></li>
-                <li><a href="/cache-control/private.css">cache-control：private</a></li>
-            </ul>
-        </li>
-        <li>协商缓存：
-            <ul>
-                <li><a href="/cache-control/Last-Modified.css">Last-Modified</a></li>
-                <li><a href="/cache-control/Etag.css">Etag</a></li>
-            </ul>
-        </li>
-        <li>不缓存：<a href="/index.html">index.html - no-store</a></li>
-    </ul>
+    <details open>
+        <summary>静态资源 - 缓存</summary>
+        <ul>
+            <li>强缓存：
+                <ul>
+                    <li><a href="/404.html">404.html - expires</a></li>
+                    <li><a href="/cache-control/max-age.css">cache-control：max-age=10</a></li>
+                    <li><a href="/cache-control/public.css">cache-control：public</a></li>
+                    <li><a href="/cache-control/private.css">cache-control：private</a></li>
+                </ul>
+            </li>
+            <li>协商缓存：
+                <ul>
+                    <li><a href="/cache-control/Last-Modified.css">Last-Modified</a></li>
+                    <li><a href="/cache-control/Etag.css">Etag</a></li>
+                </ul>
+            </li>
+            <li>不缓存：<a href="/index.html">index.html - no-store</a></li>
+        </ul>
+    </details>
     <br/>
-    <h2>接口服务</h2>
-    <form action="/api/post" method="post">
-        <h3>POST表单编码：application/x-www-form-urlencoded（默认）</h3>
-        <p>
-            param1：
-            <input type="radio" name="param1" value="true" checked>true
-            <input type="radio" name="param1" value="number">false
-        </p>
-        <p>
-            param2：<input type="text" name="param2" value="application/x-www-form-urlencoded">
-        </p>
-        <input type="submit" value="提交">
-    </form>
-    <form action="/api/post" method="post" enctype="multipart/form-data">
-        <h3>POST表单编码：multipart/form-data</h3>
-        <p>
-            param1：
-            <input type="radio" name="param1" value="true" checked>true
-            <input type="radio" name="param1" value="number">false
-        </p>
-        <p>
-            param2：<input type="text" name="param2" value="multipart/form-data">
-        </p>
-        <p>
-            img：<input type="file" accept="image/*" name="img" value="">
-        </p>
-        <input type="submit" value="提交">
-    </form>
-    <form action="/api/post" method="post" enctype="text/plain">
-        <h3>POST表单编码：text/plain</h3>
-        <p>
-            param1：
-            <input type="radio" name="param1" value="true" checked>true
-            <input type="radio" name="param1" value="number">false
-        </p>
-        <p>
-            param2：<input type="text" name="param2" value="text/plain">
-        </p>
-        <input type="submit" value="提交">
-    </form>
+    <details>
+        <summary>接口服务</summary>
+        <form action="/api/post" method="post">
+            <h3>POST表单编码：application/x-www-form-urlencoded（默认）</h3>
+            <p>
+                param1：
+                <input type="radio" name="param1" value="true" checked>true
+                <input type="radio" name="param1" value="number">false
+            </p>
+            <p>
+                param2：<input type="text" name="param2" value="application/x-www-form-urlencoded">
+            </p>
+            <input type="submit" value="提交">
+        </form>
+        <form action="/api/post" method="post" enctype="multipart/form-data">
+            <h3>POST表单编码：multipart/form-data</h3>
+            <p>
+                param1：
+                <input type="radio" name="param1" value="true" checked>true
+                <input type="radio" name="param1" value="number">false
+            </p>
+            <p>
+                param2：<input type="text" name="param2" value="multipart/form-data">
+            </p>
+            <p>
+                img：<input type="file" accept="image/*" name="img" value="">
+            </p>
+            <input type="submit" value="提交">
+        </form>
+        <form action="/api/post" method="post" enctype="text/plain">
+            <h3>POST表单编码：text/plain</h3>
+            <p>
+                param1：
+                <input type="radio" name="param1" value="true" checked>true
+                <input type="radio" name="param1" value="number">false
+            </p>
+            <p>
+                param2：<input type="text" name="param2" value="text/plain">
+            </p>
+            <input type="submit" value="提交">
+        </form>
+    </details>
     <br/>
     <details>
         <summary>预检请求</summary>
@@ -86,6 +90,7 @@
         <p>粗略地理解为：form元素不能实现的请求方式</p>
         <button onclick="optionRequest()">点击发送预检请求</button>
     </details>
+    <br/>
     <details>
         <summary>鉴权</summary>
         <a href="/auth" target="_blank">点击访问需鉴权资源</a>
@@ -126,6 +131,84 @@
                 },
                 param: JSON.stringify({a:123})
             })
+        }
+    </script>
+    <br/>
+    <details>
+        <summary>WebSockets</summary>
+        <div>
+            <input id="ws-input" placeholder="输入消息内容"/>
+            <button onclick="toggleWS()">开关WS</button>
+            <button onclick="sendWS()">发送ws消息</button>
+        </div>
+        <ul id="ws-msg-list"></ul>
+        <style>
+            #ws-msg-list {
+                display: flex;
+                flex-direction: column-reverse;
+                height: 200px;
+                width: 800px;
+                overflow: auto;
+                border: 1px solid #000;
+            }
+        </style>
+    </details>
+    <script>
+        let wsInstance = null
+        function toggleWS(){
+            if(wsInstance) {
+                appendMsg('客户端关闭ws连接')
+                wsInstance.close()
+                return
+            }
+
+            const ws = new WebSocket('ws://localhost:9001');
+            console.log(WebSocket, ws)
+            
+            ws.addEventListener('open', function(){
+                console.log('open', arguments)
+                wsInstance = ws
+                sendWS('客户端启动ws服务监听')
+            })
+            ws.addEventListener('message', function(event){
+                appendMsg('收到消息：'+ event.data)
+            })
+            ws.addEventListener('close', function(){
+                console.log('close', arguments)
+                wsInstance = null
+            })
+            ws.addEventListener('error', function(){
+                console.log('error', arguments)
+            })
+        }
+
+        function appendMsg(msg){
+            const li = document.createElement('li')
+            li.innerText = msg
+            const first = document.querySelector('#ws-msg-list').firstElementChild
+            
+            if(first){
+                document.querySelector('#ws-msg-list').insertBefore(
+                    li,
+                    first,
+                )
+            }else{
+                document.querySelector('#ws-msg-list').appendChild(li)
+            }
+        }
+
+        function sendWS(str){
+            if(!wsInstance) return appendMsg('未启动ws服务')
+
+            if(str){
+                wsInstance.send(str)
+                appendMsg(str)
+            }else{
+                const msg = document.querySelector('#ws-input').value
+                document.querySelector('#ws-input').value = ''
+                wsInstance.send(msg)
+                appendMsg('发出消息：'+ msg)
+            }
         }
     </script>
 </body>
