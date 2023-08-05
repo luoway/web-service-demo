@@ -3,6 +3,7 @@ import {getHandler, postHandler} from "./handleParam";
 import {failHandler, forbiddenHandler, successHandler} from "./handlers";
 import {handleCORS} from "./handleCORS";
 import {handleAuth} from "./handleAuth";
+import {handleEventSource} from "./handleEventSource";
 
 export default async function(
     request: http.IncomingMessage,
@@ -10,7 +11,17 @@ export default async function(
     options: any,
 ) {
     const parts = request.url.split('/')
-    if(parts.length === 3){//暂仅支持 /api/actionName 
+
+    if(parts.length === 2 ){ // /target
+        const target = parts[1]
+        switch(target){
+            case 'auth':
+                return handleAuth(request, response)
+            case 'event-source':
+                return handleEventSource(request, response)
+        }
+    }
+    else if(parts.length === 3){// /api/actionName 
         const dir = parts[1]
         const action = parts[2]
         const target = options[dir] && options[dir][action]
@@ -34,10 +45,6 @@ export default async function(
             }
             return successHandler(response, result)
         }
-    }
-
-    if(parts.length === 2 && parts[1] === 'auth' ){
-        return handleAuth(request, response)
     }
     
     return forbiddenHandler(response)

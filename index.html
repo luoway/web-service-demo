@@ -211,5 +211,78 @@
             }
         }
     </script>
+
+    <details>
+        <summary>EventSource</summary>
+        <div>
+            <button onclick="toggleES()">开关EventSource</button>
+        </div>
+        <ul id="es-msg-list"></ul>
+        <style>
+            #es-msg-list {
+                display: flex;
+                flex-direction: column-reverse;
+                height: 200px;
+                width: 800px;
+                overflow: auto;
+                border: 1px solid #000;
+            }
+        </style>
+    </details>
+    <script>
+        let esInstance = null
+        function toggleES(){
+            if(esInstance) {
+                appendESMsg('客户端关闭EventSource连接')
+                esInstance.close()
+                esInstance = null
+                return
+            }
+
+            const evtSource = new EventSource("/event-source");
+            console.log(evtSource.readyState);
+            const eventList = document.querySelector("#es-msg-list");
+
+            evtSource.addEventListener('message', e=>{
+                appendESMsg(e.data)
+            })
+
+            evtSource.addEventListener('custom-event-connect', e=>{
+                console.log('custom-event-connect', e)
+                appendESMsg(e.data)
+            })
+
+            evtSource.addEventListener('custom-event-close', e=>{
+                console.log('custom-event-close', e)
+                appendESMsg(e.data)
+                if(esInstance) {
+                    appendESMsg('服务端关闭EventSource连接')
+                    esInstance.close()
+                    console.log(evtSource.readyState);
+                    esInstance = null
+                }
+            })
+
+            evtSource.onerror = console.error
+            evtSource.onopen = function(){
+                console.log(evtSource.readyState);
+                appendESMsg('客户端启动EventSource连接')
+                esInstance = evtSource
+            }
+        }
+
+        function appendESMsg(msg){
+            const li = document.createElement("li");
+            li.textContent = `message: ${msg}`;
+
+            const list = document.querySelector('#es-msg-list')
+            const first = list.firstElementChild
+            if(first){
+                list.insertBefore( li, first )
+            }else{
+                list.appendChild(li)
+            }
+        }
+    </script>
 </body>
 </html>

@@ -33,3 +33,4 @@ node + ts 原生实现web服务应用
 - [ ] 持久连接
   - [ ] keep-alive
   - [x] WebSockets
+  - [x] EventSource
