@@ -10,12 +10,14 @@ export function handleAuth(request: http.IncomingMessage, response: http.ServerR
         if(type === 'Basic'){
             const authDecoded = Buffer.from(data, 'base64').toString()
             if(authDecoded === `${username}:${password}`){
-                return response.writeHead(200).end('auth successfully')
+                response.writeHead(200)
+                return response.end('auth successfully')
             }
         }
     }
-    
-    return response.writeHead(401, {
+
+    response.writeHead(401, {
         'WWW-Authenticate': 'Basic'
-    }).end()
+    })
+    return response.end()
 }

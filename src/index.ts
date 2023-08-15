@@ -1,4 +1,5 @@
 import * as http from 'http'
+import * as https from 'https'
 import * as path from 'path'
 
 import { apiServe, assetServe } from './service'
@@ -16,10 +17,7 @@ const cacheControl = {
     '/cache-control/Etag.css': 'Etag',
 }
 
-export const Server = http.createServer((
-    request,
-    response
-) => {
+function serve(request, response){
     if(request.url.length < 2) request.url = '/index.html'
     const target = request.url
     const extname = path.extname(target)
@@ -40,10 +38,13 @@ export const Server = http.createServer((
             api
         })
     }
-})
+}
 
-const originalListen = Server.listen
-Server.listen = function(){
-    console.log('监听端口：'+arguments[0])
-    return originalListen.apply(this, arguments)
+export const Server = http.createServer(serve)
+
+export const createHttpsServer = function(ssl){
+    return https.createServer({
+        key: ssl.key,
+        cert: ssl.cert,
+    }, serve)
 }

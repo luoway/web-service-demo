@@ -33,6 +33,7 @@ export default async function(
         }else if(request.method === 'GET'){
             param = await getHandler(request)
         }else if(request.method === 'OPTIONS'){
+            console.log('收到预检请求：', request.url)
             return successHandler(response, '')
         }
 
